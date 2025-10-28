@@ -1,5 +1,81 @@
 # Aws
 
+# ☁️ What Is AWS & How Cloud Computing Works (IaaS, PaaS, SaaS)
+
+## 💡 What Is Cloud Computing?
+Cloud computing means **using the internet to access servers, storage, databases, and software** — instead of owning physical hardware.
+
+In simple terms:
+> You rent computing power, not buy it.
+
+You only pay for what you use 💰 — like electricity or mobile data.
+
+
+## 🧠 AWS Overview
+**AWS (Amazon Web Services)** is Amazon’s **cloud platform** that provides:
+- Computing power 💻 (EC2, Lambda)
+- Storage 📦 (S3, EBS)
+- Databases 🗄️ (RDS, DynamoDB)
+- Networking 🌐 (VPC, Route 53)
+- DevOps tools ⚙️ (CodePipeline, CloudFormation)
+
+> AWS = A global data center network that lets you build and run anything in the cloud.
+
+---
+
+## ☁️ Cloud Computing Models
+
+### 1️⃣ **IaaS — Infrastructure as a Service**
+- You manage the **OS, runtime, and apps**, but AWS provides the infrastructure (servers, networking, storage etc).
+- Gives you **most control** and flexibility.
+
+🧩 **Examples:**
+- EC2 (virtual machines)
+- S3 (storage)
+- EBS (block storage)
+- VPC (networking)
+
+🧠 **Think:** Renting a virtual machine and managing it yourself.
+
+---
+
+### 2️⃣ **PaaS — Platform as a Service**
+- AWS manages the **infrastructure + runtime**.
+- You only focus on **your code** and **data**.
+- No need to handle servers or scaling manually.
+
+🧩 **Examples:**
+- AWS Elastic Beanstalk
+- AWS Lambda (serverless)
+- AWS RDS (managed database)
+
+🧠 **Think:** You deploy your app — AWS runs it for you.
+
+---
+
+### 3️⃣ **SaaS — Software as a Service**
+- You simply use the software — no setup or management.
+- Everything (infrastructure, app, updates) is handled by the provider.
+
+🧩 **Examples:**
+- AWS WorkMail (email service)
+- Amazon Chime (video meetings)
+- Third-party SaaS like Gmail, Zoom, Salesforce
+
+🧠 **Think:** Using ready-made software through your browser.
+
+---
+
+## 🧾 Comparison Table
+
+| Layer | You Manage | Cloud Provider Manages | Example AWS Service |
+|-------|-------------|------------------------|----------------------|
+| **IaaS** | OS, App, Data | Servers, Networking | EC2, S3 |
+| **PaaS** | App, Data | OS, Runtime, Infra | Elastic Beanstalk, RDS |
+| **SaaS** | Nothing | Everything | WorkMail, Chime |
+
+
+
 # 🌍 AWS Global Infrastructure
 
 ## 🏙️ 1. Region
@@ -189,6 +265,7 @@ A policy answers three questions:
     }
   ]
 }
+---
 
 
 # 🔐 AWS IAM Best Practices
@@ -205,3 +282,189 @@ A policy answers three questions:
 | Enable MFA | Prevents unauthorized logins |
 | Monitor IAM | Detect and fix security risks |
 | Billing Alerts | Avoid surprise costs |
+
+# 💻 What Is EC2 (Elastic Compute Cloud)
+
+## 💡 Definition
+**Amazon EC2 (Elastic Compute Cloud)** is AWS’s service that provides **virtual servers (instances)** in the cloud.
+
+Instead of buying physical computers, you **rent computing power** from AWS and pay only for what you use.
+
+🧠 Think of EC2 as:
+> “Your personal Linux or Windows server running inside Amazon’s data center.”
+
+---
+
+## ⚙️ Key EC2 Concepts
+
+### 🧩 1️⃣ Instance
+- An **EC2 instance** is your **virtual machine**.
+- You choose its size (CPU, RAM, storage).
+- Runs an operating system from an AMI (Amazon Machine Image).
+
+🧠 Example:
+`t2.micro` → 1 vCPU, 1 GB RAM (Free Tier eligible).
+
+---
+
+### 🧩 2️⃣ AMI (Amazon Machine Image)
+- An **AMI** is a **template** used to create instances.
+- It defines:
+  - Operating System (Ubuntu, Amazon Linux, Windows)
+  - Preinstalled software
+  - Default configuration
+
+🧠 Example:
+You select “Ubuntu Server 22.04 LTS AMI” → AWS launches a server with Ubuntu preinstalled.
+
+---
+
+### 🧩 3️⃣ Key Pair
+- EC2 uses **SSH key pairs** (not passwords) for secure access.
+- When launching an instance:
+  - You **download a `.pem` file** (your private key).
+  - AWS keeps the public key.
+- You use this `.pem` file to connect via SSH.
+
+🧠 Example:
+```bash
+chmod 400 my-key.pem
+ssh -i my-key.pem ubuntu@<ec2-public-ip>
+
+
+# ☁️ AWS Storage Services
+
+## 🧭 Overview
+AWS provides multiple types of storage for different needs — from storing static files and backups to attaching persistent disks or sharing data across multiple servers.
+
+| Service | Type | Used For | Think Of It Like |
+|----------|------|-----------|------------------|
+| **S3** | Object Storage | Files, backups, websites | A giant online USB drive |
+| **EBS** | Block Storage | EC2 disks (OS or app data) | Your computer’s hard drive |
+| **EFS** | File Storage | Shared storage for many EC2s | A shared office network drive |
+
+---
+
+## 🪣 1️⃣ Amazon S3 — Object Storage
+
+### 💡 Concept
+Amazon **S3 (Simple Storage Service)** is used to store and retrieve any amount of data — such as images, logs, or website files.  
+It’s **object-based**, meaning you store files as *objects* inside *buckets* instead of as traditional files/folders.
+
+---
+
+### 🧩 Key Components
+| Component | Description | Example |
+|------------|--------------|----------|
+| **Bucket** | Container for data (unique name per region) | `my-devops-bucket` |
+| **Object** | The actual file or data | `index.html`, `photo.png` |
+| **Key** | File path (unique identifier for object) | `images/logo.png` |
+| **Region** | Buckets are created in a specific AWS region | `ap-south-1` |
+
+---
+
+### ⚙️ Features
+- **Versioning:** Keeps multiple versions of files.  
+- **Lifecycle Rules:** Automatically move or delete old data.  
+- **Bucket Policies:** Control public or private access.  
+- **Static Website Hosting:** Host websites directly from a bucket.  
+- **Cross-Region Replication:** Replicate data to another region.  
+
+---
+
+### 🧠 CLI Example
+```bash
+# Create a new bucket
+aws s3 mb s3://my-devops-bucket --region ap-south-1
+
+# Upload a file
+aws s3 cp index.html s3://my-devops-bucket/
+
+# List bucket contents
+aws s3 ls s3://my-devops-bucket
+
+
+---
+
+## 💾 **2️⃣ Amazon EBS — Block Storage**
+
+```markdown
+# 💾 Amazon EBS — Block Storage
+
+## 💡 Concept
+**EBS (Elastic Block Store)** provides **block-level storage** for EC2 instances — like a virtual hard disk.  
+Each EC2 uses an EBS volume to store its OS and application data.  
+When stopped, data remains intact (persistent storage).
+
+---
+
+## 🧩 Key Components
+| Component | Description | Example |
+|------------|--------------|----------|
+| **Volume** | Virtual hard disk attached to EC2 | `/dev/xvda` |
+| **Snapshot** | Backup image of a volume (stored in S3) | `snap-0ab12345` |
+| **Attachment** | Linking a volume to an EC2 instance | `i-0a12b34c5` |
+
+---
+
+## ⚙️ Features
+- Persistent and replicated within the same AZ  
+- Snapshots for backup & recovery  
+- Supports encryption and resizing  
+- Detach and reattach between EC2s  
+
+---
+
+## 🧠 CLI Example
+```bash
+# Create a volume
+aws ec2 create-volume --size 8 --availability-zone us-east-1a
+
+# Attach it to an EC2 instance
+aws ec2 attach-volume --volume-id vol-123456 --instance-id i-123456 --device /dev/xvdf
+
+# Create a snapshot
+aws ec2 create-snapshot --volume-id vol-123456 --description "Daily Backup"
+
+
+---
+
+## 🗂️ **3️⃣ Amazon EFS — File Storage**
+
+```markdown
+# 🗂️ Amazon EFS — File Storage
+
+## 💡 Concept
+**EFS (Elastic File System)** is a **shared file storage system** that multiple EC2 instances can access at once.  
+It’s like a shared network drive for your servers — ideal for web apps, logs, and container workloads.
+
+---
+
+## 🧩 Key Components
+| Component | Description | Example |
+|------------|--------------|----------|
+| **File System** | The main EFS storage resource | `fs-12345abcd` |
+| **Mount Target** | Network endpoint in each AZ | `fs-12345.efs.ap-south-1.amazonaws.com` |
+| **Access Point** | Defines access permissions and paths | `ap-0a1b2c3d` |
+
+---
+
+## ⚙️ Features
+- Shared across multiple EC2 instances  
+- Automatically scales with data size  
+- Highly available across multiple AZs  
+- Uses **NFS (Network File System)** protocol  
+
+---
+
+## 🧠 Mount Example
+```bash
+# Install NFS utilities
+sudo apt update -y
+sudo apt install nfs-common -y
+
+# Create mount directory
+sudo mkdir /mnt/efs
+
+# Mount EFS
+sudo mount -t nfs4 fs-12345.efs.ap-south-1.amazonaws.com:/ /mnt/efs
