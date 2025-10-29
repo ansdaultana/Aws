@@ -468,3 +468,29 @@ sudo mkdir /mnt/efs
 
 # Mount EFS
 sudo mount -t nfs4 fs-12345.efs.ap-south-1.amazonaws.com:/ /mnt/efs
+
+
+# ⚖️ Key Differences Between S3, EBS, and EFS
+
+## 🧩 1️⃣ Storage Type & Access Method
+| Service | Storage Type | Access Method |
+|----------|---------------|---------------|
+| **S3** | Object Storage | Accessed via API or HTTPS (upload/download files) |
+| **EBS** | Block Storage | Attached to a single EC2 instance as a disk |
+| **EFS** | File Storage | Mounted as a shared file system by multiple EC2s |
+
+---
+
+## 🧩 2️⃣ Use Case & Scalability
+| Service | Primary Use Case | Scalability |
+|----------|------------------|--------------|
+| **S3** | Store backups, media, logs, static websites | Automatically scales to unlimited size |
+| **EBS** | EC2 OS or database storage | Manual resizing; tied to one AZ |
+| **EFS** | Shared storage for multiple EC2s | Automatically scales with file growth |
+
+---
+
+✅ **In short:**  
+- **S3** → Best for files and backups.  
+- **EBS** → Best for one EC2’s disk or database storage.  
+- **EFS** → Best for shared data between multiple EC2 instances.
