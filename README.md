@@ -266,7 +266,6 @@ A policy answers three questions:
   ]
 }
 
-```
 
 # 🔐 AWS IAM Best Practices
 
@@ -330,7 +329,7 @@ You select “Ubuntu Server 22.04 LTS AMI” → AWS launches a server with Ubun
 ```bash
 chmod 400 my-key.pem
 ssh -i my-key.pem ubuntu@<ec2-public-ip>
-
+```
 
 # ☁️ AWS Storage Services
 
@@ -382,13 +381,12 @@ aws s3 cp index.html s3://my-devops-bucket/
 
 # List bucket contents
 aws s3 ls s3://my-devops-bucket
-
+```
 
 ---
 
 ## 💾 **2️⃣ Amazon EBS — Block Storage**
 
-```markdown
 # 💾 Amazon EBS — Block Storage
 
 ## 💡 Concept
@@ -425,13 +423,12 @@ aws ec2 attach-volume --volume-id vol-123456 --instance-id i-123456 --device /de
 
 # Create a snapshot
 aws ec2 create-snapshot --volume-id vol-123456 --description "Daily Backup"
-
+```
 
 ---
 
 ## 🗂️ **3️⃣ Amazon EFS — File Storage**
 
-```markdown
 # 🗂️ Amazon EFS — File Storage
 
 ## 💡 Concept
@@ -468,7 +465,7 @@ sudo mkdir /mnt/efs
 
 # Mount EFS
 sudo mount -t nfs4 fs-12345.efs.ap-south-1.amazonaws.com:/ /mnt/efs
-
+```
 
 # ⚖️ Key Differences Between S3, EBS, and EFS
 
