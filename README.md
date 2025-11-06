@@ -265,9 +265,8 @@ A policy answers three questions:
     }
   ]
 }
-```json
 
-
+```
 
 # 🔐 AWS IAM Best Practices
 
