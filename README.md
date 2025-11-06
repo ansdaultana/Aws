@@ -265,7 +265,7 @@ A policy answers three questions:
     }
   ]
 }
-
+```
 
 # 🔐 AWS IAM Best Practices
 
@@ -329,6 +329,7 @@ You select “Ubuntu Server 22.04 LTS AMI” → AWS launches a server with Ubun
 ```bash
 chmod 400 my-key.pem
 ssh -i my-key.pem ubuntu@<ec2-public-ip>
+
 ```
 
 # ☁️ AWS Storage Services
