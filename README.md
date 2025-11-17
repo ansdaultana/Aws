@@ -492,3 +492,84 @@ sudo mount -t nfs4 fs-12345.efs.ap-south-1.amazonaws.com:/ /mnt/efs
 - **S3** → Best for files and backups.  
 - **EBS** → Best for one EC2’s disk or database storage.  
 - **EFS** → Best for shared data between multiple EC2 instances.
+
+🕸️ Networking & Load Balancing
+===============================
+
+🧭 VPC (Virtual Private Cloud)
+------------------------------
+
+*   A **VPC** is an isolated section of AWS Cloud where you can launch your resources.
+    
+*   You define your **IP address range** (CIDR block), subnets, route tables, and gateways.
+    
+*   It provides **complete control** over networking — routing, security, and connectivity.
+    
+
+🧩 Subnets
+----------
+
+Subnets divide a VPC’s network range into smaller parts.
+
+*   **Public Subnet:**
+    
+    *   Connected to an **Internet Gateway (IGW)**
+        
+    *   Allows instances to communicate **directly with the internet**
+        
+    *   Example: Web servers
+        
+*   **Private Subnet:**
+    
+    *   No direct internet access
+        
+    *   Access external services through **NAT Gateway**
+        
+    *   Example: Databases, application servers
+        
+
+🌐 Internet Gateway, Route Tables & NAT Gateway
+-----------------------------------------------
+
+### 🔹 Internet Gateway (IGW)
+
+*   Allows **inbound/outbound internet traffic** for instances in **public subnets**.
+    
+*   Must be **attached** to the VPC.
+    
+
+### 🔹 Route Tables
+
+*   Define how traffic is **routed** within the VPC.
+    
+*   Example:
+    
+    *   Public subnet route → 0.0.0.0/0 → Internet Gateway
+        
+    *   Private subnet route → 0.0.0.0/0 → NAT Gateway
+        
+
+### 🔹 NAT Gateway
+
+*   Provides **outbound internet access** for instances in **private subnets**.
+    
+*   Used for updates, API calls, etc., without exposing private resources.
+
+📏 CIDR (Classless Inter-Domain Routing)
+----------------------------------------
+
+CIDR defines **how many IP addresses** are inside a network by using a **slash notation** like:
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   10.0.0.0/16   `
+
+### 🔹 How CIDR works
+
+A CIDR block has two parts:
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   [Network Address] / [Prefix Length]        10.0.0.0           /16   `
+
+*   **Network Address** → starting IP
+    
+*   **/16** → how many bits are fixed for the network
+    
+*   Remaining bits → used to assign host IPs
